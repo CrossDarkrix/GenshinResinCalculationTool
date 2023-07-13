@@ -1,2 +1,2 @@
-# GenshinResinCalculationTool
- 一日で作れる樹脂の計算(Pythonista専用)
+#Genshin Impact Resin CalculationTool
+*樹脂計算機*
