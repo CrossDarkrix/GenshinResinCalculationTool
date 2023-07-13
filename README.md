@@ -1,3 +1,3 @@
-#Genshin Impact Resin CalculationTool
+# Genshin Impact Resin CalculationTool
 
 *樹脂計算機*
