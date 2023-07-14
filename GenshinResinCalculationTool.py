@@ -95,7 +95,7 @@ def RealtimeRefresh():
 
 def calcTime():
 	v['nowResin'].end_editing()
-	if v['nowResin'].text <= '121':
+	if '121' <= v['nowResin'].text:
 		if v['nowResin'].text <= '161':
 			if v['nowResin'].text == '':
 				nowResin = 0
