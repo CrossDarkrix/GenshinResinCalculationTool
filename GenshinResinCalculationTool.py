@@ -1,4 +1,4 @@
-import base64, ui, locale, datetime, concurrent.futures, time
+import base64, console, ui, locale, datetime, concurrent.futures, time
 from datetime import datetime as dt
 from scene import *
 from math import pi, sin, cos
@@ -14,7 +14,7 @@ class Clock (Scene):
 		if 18 <= dt.now().hour and dt.now().hour:
 			shadow = ('white', 0, 0, 10)
 			self.face = ShapeNode(circle, 'black', 'white', shadow=shadow)
-		elif datetime.now().hour <= 5:
+		elif dt.now().hour <= 5:
 			shadow = ('white', 0, 0, 10)
 			self.face = ShapeNode(circle, 'black', 'white', shadow=shadow)
 		else:
@@ -95,11 +95,17 @@ def RealtimeRefresh():
 
 def calcTime():
 	v['nowResin'].end_editing()
-	if v['nowResin'].text == '':
-		nowResin = 0
-		v['nowResin'].text = '0'
+	if v['nowResin'].text <= '121':
+		if v['nowResin'].text <= '161':
+			if v['nowResin'].text == '':
+				nowResin = 0
+				v['nowResin'].text = '0'
+			else:
+				nowResin = int(v['nowResin'].text)
+		else:
+			console.alert('樹脂は160以下でしか設定できません。')
 	else:
-		nowResin = int(v['nowResin'].text)
+		console.alert('樹脂が昨日から遡ることになり、エラーになりました。')
 	Time = [v['StartResinTime'].date]
 	resin_time_count = []
 	LoopTime = [0]
