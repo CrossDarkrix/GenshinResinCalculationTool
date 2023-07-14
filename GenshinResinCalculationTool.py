@@ -85,7 +85,6 @@ def RealtimeClock():
 	Cc.height = 170
 	v['Clock'].add_subview(Cc)
 
-ui.Label.add_subview
 def RealtimeRefresh():
 	r = [0]
 	for _i in r:
@@ -95,39 +94,36 @@ def RealtimeRefresh():
 
 def calcTime():
 	v['nowResin'].end_editing()
-	if '121' <= v['nowResin'].text:
-		if 161 <= v['nowResin'].text:
-			if v['nowResin'].text == '':
-				nowResin = 0
-				v['nowResin'].text = '0'
-			else:
-				nowResin = int(v['nowResin'].text)
-		else:
-			console.alert('樹脂は160以下でしか設定できません。')
+	if 121 <= int(v['nowResin'].text):
+		console.alert('120以上は朝5時以前を参照するので、樹脂は120以下でしか設定できません!', button1='OK', hide_cancel_button=True)
 	else:
-		console.alert('樹脂が昨日から遡ることになり、エラーになりました。')
-	Time = [v['StartResinTime'].date]
-	resin_time_count = []
-	LoopTime = [0]
-	for _i in LoopTime:
-		if not Time[0].day == v['StartResinTime'].date.day:
-			break
-		elif 5 <= Time[0].hour and v['StartResinTime'].date.day == Time[0].day:
-			if not nowResin == 0:
-				Time[0] = (Time[0] + datetime.timedelta(minutes=int((40 - nowResin) * 8 - 1)))
-				nowResin = 0
-			else:
-				Time[0] = (Time[0] + datetime.timedelta(minutes=5*60))
-			resin_time_count.append('推定時刻: {}'.format(Time[0].strftime('%Y/%m/%d %H:%M:%S')))
+		if v['nowResin'].text == '':
+			nowResin = 0
+			v['nowResin'].text = '0'
 		else:
-			break
-		LoopTime.append(_i+1)
-	v['Result'].text = '今から数えて濃縮樹脂が作れる回数: {}'.format(len(resin_time_count))
-	v['GetResinTime'].text = '\n'.join(resin_time_count)
+			nowResin = int(v['nowResin'].text)
+		Time = [v['StartResinTime'].date]
+		resin_time_count = []
+		LoopTime = [0]
+		for _i in LoopTime:
+			if not Time[0].day == v['StartResinTime'].date.day:
+				break
+			elif 5 <= Time[0].hour and v['StartResinTime'].date.day == Time[0].day:
+				if not nowResin == 0:
+					Time[0] = (Time[0] + datetime.timedelta(minutes=int((40 - nowResin) * 8 - 1)))
+					nowResin = 0
+				else:
+					Time[0] = (Time[0] + datetime.timedelta(minutes=5*60))
+				resin_time_count.append('推定時刻: {}'.format(Time[0].strftime('%Y/%m/%d %H:%M:%S')))
+			else:
+				break
+			LoopTime.append(_i+1)
+		v['Result'].text = '今から数えて濃縮樹脂が作れる回数: {}'.format(len(resin_time_count))
+		v['GetResinTime'].text = '\n'.join(resin_time_count)
 
 def main(v):
 	concurrent.futures.ThreadPoolExecutor().submit(calcTime)
 concurrent.futures.ThreadPoolExecutor().submit(RealtimeRefresh)
-concurrent.futures.ThreadPoolExecutor().submit(RealtimeClock).result()
+concurrent.futures.ThreadPoolExecutor().submit(RealtimeClock)
 v['Calc'].action = main
-v.present('popover', orientations=['portrait'])
+concurrent.futures.ThreadPoolExecutor().submit(v.present, 'popover', orientations=['portrait'])
